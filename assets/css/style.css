@@ -928,8 +928,8 @@ section .container {
   right: 15px;
 }
 .portfolio_image{
-  height:230px;
-  /* width:500px; */
+  height:700px;
+  width:100%;
 }
 /*--------------------------------------------------------------
 # Portfolio Details
