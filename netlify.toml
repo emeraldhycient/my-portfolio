@@ -1,0 +1,5 @@
+[[redirects]]
+    from = "/*"
+    to = "https://hycient.framer.website/"
+    status = 301
+    force = true
