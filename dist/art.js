@@ -38,9 +38,10 @@ export const mark = '<svg viewBox="0 0 32 32" aria-hidden="true" focusable="fals
 // diagonally across the figure. Uses the same parent IDs as the vertical log.
 export function repositoryGraph(items, branches) {
   const order = [...items].sort((a, b) => a.number - b.number);
+  const graphWidth = Math.max(535, 80 + 91 * (order.length - 1));
   const laneY = (b) => [111, 48, 177][Math.max(0, branches.findIndex((it) => it.id === b)) % 3];
   const points = new Map(order.map((it, i) => [it.id, {
-    x: order.length === 1 ? 267 : 38 + (455 * i) / Math.max(1, order.length - 1), y: laneY(it.branch), item: it,
+    x: order.length === 1 ? 267 : 38 + ((graphWidth - 80) * i) / Math.max(1, order.length - 1), y: laneY(it.branch), item: it,
   }]));
   const primary = branches[0]?.id;
   const paths = [];
@@ -74,8 +75,11 @@ export function repositoryGraph(items, branches) {
       ${head ? `<g class="head-flag"><path d="M${x} ${y-16}v-11"/><rect x="${x-24}" y="${y-48}" width="48" height="21" rx="3"/><text x="${x}" y="${y-33}" text-anchor="middle">HEAD</text></g>` : ""}
     </a>`;
   });
-  const baseline = laneY(primary);
-  return `<svg viewBox="0 0 535 214" role="group" aria-label="Project history, oldest on the left"><g aria-hidden="true"><path class="map-tail" d="M0 ${baseline}H38m455 0h42"/>${paths.join("")}</g>${nodes.join("")}</svg>`;
+  const first = [...points.values()][0];
+  const head = points.get(last?.id);
+  const tail = first && head ? `<path class="map-tail" d="M0 ${first.y}H${first.x} M${head.x} ${head.y}H${graphWidth}"/>` : "";
+  const width = graphWidth > 535 ? ` style="width:${graphWidth / 535 * 100}%"` : "";
+  return `<svg viewBox="0 0 ${graphWidth} 214"${width} role="group" aria-label="Project history, oldest on the left"><g aria-hidden="true">${tail}${paths.join("")}</g>${nodes.join("")}</svg>`;
 }
 
 const range = (n, f) => Array.from({length:n}, (_, i) => f(i)).join("");

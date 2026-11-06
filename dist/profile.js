@@ -1,4 +1,4 @@
-import { profile, migrations, stackGroups } from "./portfolio.js";
+import { profile, stackGroups } from "./portfolio.js";
 import { escapeHTML as esc, icon } from "./art.js";
 import { setupBanner } from "./banner.js";
 import { setupTheme } from "./theme.js";
@@ -11,7 +11,7 @@ export function stackFilterUrl(tool) {
   return url.pathname + url.search + url.hash;
 }
 
-function techStack() {
+function techStack(migrations) {
   const used = new Set(migrations.flatMap(project => project.stack));
   const listed = new Set(stackGroups.flatMap(group => group.tools));
   const other = [...used].filter(tool => !listed.has(tool)).sort();
@@ -24,7 +24,7 @@ function techStack() {
   }).join("");
 }
 
-function resumeDownload() {
+function resumeDownload(migrations) {
   const work = [...migrations].sort((a, b) => b.number - a.number).map(item => [
     item.title + " · " + item.date,
     item.summary,
@@ -38,17 +38,18 @@ function resumeDownload() {
   return URL.createObjectURL(new Blob([text.join("\n") + "\n"], { type: "text/plain;charset=utf-8" }));
 }
 
-function contactRow() {
+function contactRow(resume, resumeStatus = "Loading projects") {
   const contacts = [
     { label: "GitHub", icon: "github", url: profile.social?.github, external: true },
     { label: "LinkedIn", icon: "linkedin", url: profile.social?.linkedin, external: true },
     { label: "Email", icon: "mail", url: "#contact" },
-    { label: "Résumé", icon: "download", url: resumeDownload(), download: profile.handle + "-resume.txt" },
+    { label: "Résumé", icon: "download", url: resume, download: profile.handle + "-resume.txt" },
   ];
   return contacts.map(contact => {
     const leadingIcon = `<span class="contact-icon">${icon(contact.icon)}</span>`;
     if (!contact.url) {
-      return `<div class="contact-cell pending">${leadingIcon}<span>${esc(contact.label)}<small>Link pending</small></span></div>`;
+      const status = contact.download ? resumeStatus : "Link pending";
+      return `<div class="contact-cell pending">${leadingIcon}<span>${esc(contact.label)}<small>${esc(status)}</small></span></div>`;
     }
     const action = contact.download ? `download="${esc(contact.download)}"` : contact.external ? 'target="_blank" rel="noopener noreferrer"' : "";
     const direction = contact.download ? "down" : contact.external ? "upRight" : "right";
@@ -63,8 +64,20 @@ export function setupProfile() {
   document.getElementById("profile-handle").textContent = "@" + profile.handle;
   document.getElementById("intro-copy").textContent = profile.intro;
   document.getElementById("about-aside").textContent = profile.aside || "";
-  document.getElementById("contact-links").innerHTML = contactRow();
-  document.getElementById("tools").innerHTML = techStack();
+  document.getElementById("contact-links").innerHTML = contactRow(null);
   setupTheme();
   setupBanner();
+}
+
+let previousResume;
+export function updateProjectProfile(migrations) {
+  if (previousResume) URL.revokeObjectURL(previousResume);
+  previousResume = resumeDownload(migrations);
+  document.getElementById("contact-links").innerHTML = contactRow(previousResume);
+  document.getElementById("tools").innerHTML = techStack(migrations);
+}
+
+export function projectProfileUnavailable() {
+  document.getElementById("contact-links").innerHTML = contactRow(null, "Projects unavailable");
+  document.getElementById("tools").innerHTML = '<div class="tool-group"><dt>Projects</dt><dd>Tech stack unavailable.</dd></div>';
 }

@@ -12,7 +12,7 @@ Edit `dist/portfolio.js`. The `profile` object holds the name, introduction, REA
 
 Set `profile.social.github` and `profile.social.linkedin` to enable those contact links. The downloadable text résumé uses the profile and project data. The tech stack lists the tools used by the projects, and each tool links to its filtered log.
 
-Each migration has a stable `id` used in its URL, an increasing `number`, a date, a short display hash, a branch, and a list of earlier migration IDs in `parents`. Both graphs use these parent relationships. The hash is a display label; the site does not read or require a real Git repository. Keep the IDs stable when editing a project so shared links continue to work.
+Create and edit migrations under **Migration** in the [standalone Studio](https://branchlog-uin9wku4.sanity.studio/). Each has a stable slug, an increasing number, an optional display hash, a date, a branch and references to earlier migrations. The graph, log, project notes, tech stack and résumé all read those published records on page load. Keep slugs stable when editing a project so shared links continue to work.
 
 The optional `art` field selects a cover from `dist/art.js`. Unknown cover names use the notebook illustration. Dates use ISO format (`YYYY-MM-DD`).
 

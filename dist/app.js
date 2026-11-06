@@ -1,10 +1,12 @@
-import { profile, branches, migrations } from "./portfolio.js";
+import { profile, branches } from "./portfolio.js";
 import { cover, escapeHTML as esc, icon, mark, repositoryGraph } from "./art.js";
-import { setupProfile, stackFilterUrl } from "./profile.js";
+import { setupProfile, updateProjectProfile, projectProfileUnavailable, stackFilterUrl } from "./profile.js";
+import { readMigrations } from "./migrations.js";
 
 const $ = (selector) => document.querySelector(selector);
-const historyItems = [...migrations].sort((a, b) => b.number - a.number);
-const byId = new Map(historyItems.map((item) => [item.id, item]));
+let historyItems = [];
+let byId = new Map();
+let loadState = "loading";
 const serial = (n) => String(n).padStart(3, "0");
 const shortDate = (date) => new Intl.DateTimeFormat("en-GB", {day:"numeric", month:"short", year:"numeric", timeZone:"UTC"}).format(new Date(date + "T12:00:00Z"));
 const pill = (branch) => `<span class="branch-pill branch-${esc(branch)}">${icon("branch")}${esc(branch)}</span>`;
@@ -21,12 +23,12 @@ let renderedTool = "";
 document.title = profile.name + " — Branchlog";
 setupProfile();
 $("#footer-credit").textContent = profile.name + " / Branchlog";
-$("#map-stage").innerHTML = repositoryGraph(historyItems, branches);
+$("#map-stage").innerHTML = '<p class="map-message">Loading graph…</p>';
 const mapHint = $("#map-revision");
 function showMapHint(target) {
   const link = target?.closest?.(".graph-node");
   const item = link && byId.get(decodeURIComponent(link.getAttribute("href").slice("#migration/".length)));
-  mapHint.textContent = item ? item.title + " / M" + serial(item.number) : "Select a node ↗";
+  mapHint.textContent = item ? item.title + " / M" + serial(item.number) : historyItems.length ? "Select a node ↗" : "";
 }
 showMapHint();
 $("#map-stage").addEventListener("pointerover", e => showMapHint(e.target));
@@ -57,8 +59,8 @@ function renderLog() {
       <h3 class="row-title">${esc(item.title)}</h3><p class="row-summary">${esc(item.summary)}</p></div>
     <span class="row-branch">${pill(item.branch)}</span><span class="entry-arrow">${icon("upRight")}</span>
   </a></li>`).join("");
-  $("#log-count").textContent = String(displayed.length).padStart(2,"0");
-  $("#empty").hidden = displayed.length > 0;
+  $("#log-count").textContent = loadState === "ready" ? String(displayed.length).padStart(2,"0") : "—";
+  $("#empty").hidden = !historyItems.length || displayed.length > 0;
   $("#result-status").textContent = displayed.length + " of " + historyItems.length + " migrations shown.";
   $("#end-label").textContent = displayed.length === historyItems.length ? "End of log" : "End of results";
   scheduleRails();
@@ -126,9 +128,9 @@ function projectNote(item) {
     </div>
     <p class="note-lede">${esc(item.summary)}</p>
     <div class="note-meta">${pill(item.branch)}<span><time datetime="${esc(item.date)}">${esc(shortDate(item.date))}</time></span><span class="note-hash">${icon("commit")}${esc(item.hash)}</span></div>
-    <div class="change-block"><section><h3><b class="diff-minus" aria-hidden="true">−</b> Before</h3><p>${esc(item.before)}</p></section><section><h3><b class="diff-plus" aria-hidden="true">+</b> After</h3><p>${esc(item.after)}</p></section></div>
-    <section class="note-section"><h3>Implementation notes</h3><ul>${item.notes.map(n=>`<li>${esc(n)}</li>`).join("")}</ul></section>
-    <div class="note-stack"><span class="vis-label">Stack</span>${item.stack.map(s=>`<span class="stack-item">${esc(s)}</span>`).join("")}</div>
+    ${item.before || item.after ? `<div class="change-block">${item.before ? `<section><h3><b class="diff-minus" aria-hidden="true">−</b> Before</h3><p>${esc(item.before)}</p></section>` : ""}${item.after ? `<section><h3><b class="diff-plus" aria-hidden="true">+</b> After</h3><p>${esc(item.after)}</p></section>` : ""}</div>` : ""}
+    ${item.notes.length ? `<section class="note-section"><h3>Implementation notes</h3><ul>${item.notes.map(n=>`<li>${esc(n)}</li>`).join("")}</ul></section>` : ""}
+    ${item.stack.length ? `<div class="note-stack"><span class="vis-label">Stack</span>${item.stack.map(s=>`<span class="stack-item">${esc(s)}</span>`).join("")}</div>` : ""}
     <div class="note-actions">${copyButton("Copy link","link")}${copyStatus}</div>
     <nav class="note-nav" aria-label="Other migrations">
       ${older ? `<a href="${address(older)}">${icon("left")}<span><small>Older</small>${esc(older.title)}</span></a>` : "<span></span>"}
@@ -179,7 +181,11 @@ function renderPanel() {
     let id;
     try { id = decodeURIComponent(hash.slice("#migration/".length)); } catch { id=""; }
     const item = byId.get(id);
-    if (item) { path="migrations / "+serial(item.number)+"_"+item.id; html=projectNote(item); title=item.title; }
+    if (loadState !== "ready") {
+      path = "migrations";
+      title = loadState === "error" ? "Migration unavailable" : "Loading migration";
+      html = `<article class="contact"><h2 id="panel-title" tabindex="-1">${title}</h2>${loadState === "error" ? '<button type="button" class="secondary" data-retry-migrations>Retry</button>' : ""}</article>`;
+    } else if (item) { path="migrations / "+serial(item.number)+"_"+item.id; html=projectNote(item); title=item.title; }
     else { path="migrations"; title="Migration not found"; html='<article class="contact"><h2 id="panel-title" tabindex="-1">Migration not found<span>.</span></h2><p>This link does not match a project in the log.</p><a href="#log" class="secondary">Explore the log</a></article>'; }
   }
   $("#panel-path").innerHTML = icon(hash === "#readme" ? "file" : hash === "#contact" ? "mail" : "commit") + "<span>"+esc(path)+"</span>";
@@ -254,4 +260,36 @@ document.addEventListener("keydown", e=>{
   if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey || panel.open || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
   e.preventDefault(); search.focus(); search.select();
 });
+async function loadMigrations() {
+  const notice = $("#migration-notice");
+  loadState = "loading";
+  notice.hidden = false;
+  notice.textContent = "Loading migrations…";
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 14000);
+  try {
+    const items = await readMigrations(controller.signal);
+    historyItems = items;
+    byId = new Map(items.map(item => [item.id, item]));
+    loadState = "ready";
+    updateProjectProfile(items);
+    $("#map-stage").innerHTML = items.length ? repositoryGraph(items, branches) : '<p class="map-message">No published migrations yet.</p>';
+    notice.hidden = items.length > 0;
+    notice.textContent = items.length ? "" : "No published migrations yet.";
+  } catch {
+    loadState = "error";
+    $("#map-stage").innerHTML = '<p class="map-message">Graph unavailable.</p>';
+    projectProfileUnavailable();
+    notice.innerHTML = 'Migrations could not load. <button class="secondary" type="button" data-retry-migrations>Retry</button>';
+  } finally {
+    clearTimeout(timer);
+    renderLog();
+    showMapHint();
+    if (location.hash.startsWith("#migration/")) { activePage = ""; renderPanel(); }
+  }
+}
+document.addEventListener("click", event => {
+  if (event.target.closest("[data-retry-migrations]") && loadState !== "loading") loadMigrations();
+});
 renderPanel();
+loadMigrations();

@@ -161,7 +161,7 @@ html { scroll-padding-top: 4.5rem; }
 .map-head, .map-foot { padding-inline: .83rem; }
 .map-head { font-size: .68rem; padding-top: .69rem; }
 .map-title .icon { width: .9rem; height: .9rem; }
-.map-stage { margin: .4rem 0 .15rem; background-size: 12px 12px; }
+.map-stage { margin: .4rem 0 .15rem; background-size: 12px 12px; overflow-x: auto; scrollbar-width: thin; }
 .map-foot { padding-block: .55rem; gap: .4rem; }
 .map-legend { font-size: .61rem; gap: .67rem; }
 .map-revision { font-size: .57rem; letter-spacing: 0; }
@@ -236,6 +236,10 @@ a.contact-cell:focus-visible { outline-offset: -3px; }
   --branch-width: 78px;
 }
 .log-head { margin-bottom: .96rem; }
+.edit-work { margin-left: auto; }
+.migration-notice { padding: 1.2rem 0; color: var(--color-muted); font-size: .9rem; }
+.migration-notice button { margin-left: .6rem; }
+.map-message { padding: 2rem .85rem; color: var(--color-dark-muted); font: .7rem/1.5 var(--font-mono); }
 .log-title { gap: .61rem; }
 .log-bar { border-block-style: dashed; background: transparent; }
 .entry { min-height: 104px; border-bottom-style: dashed; }
