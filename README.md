@@ -16,7 +16,7 @@ Then open `http://127.0.0.1:4173/`. The dev server watches `dist/` and reloads o
 
 ## Deploy
 
-The site runs on Cloudflare as a Worker that serves `dist/` as static files (`wrangler.jsonc`), at [hycient.dev](https://hycient.dev/).
+The site runs on Cloudflare as a Worker that serves `dist/` as static files (`wrangler.jsonc`), at [hycient.dev](https://hycient.dev/) and `www.hycient.dev`. The domain is registered at Hostinger and uses Cloudflare's nameservers; deploying attaches both hostnames and Cloudflare manages their DNS records and certificates.
 
 ```bash
 npm run deploy
