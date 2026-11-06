@@ -1,5 +1,6 @@
 import { profile, branches, migrations } from "./portfolio.js";
 import { cover, escapeHTML as esc, icon, mark, repositoryGraph } from "./art.js";
+import { setupProfile, stackFilterUrl } from "./profile.js";
 
 const $ = (selector) => document.querySelector(selector);
 const historyItems = [...migrations].sort((a, b) => b.number - a.number);
@@ -15,10 +16,10 @@ const entries = $("#entries");
 const rails = $("#rails");
 let displayed = historyItems;
 let queuedRailFrame = 0;
+let renderedTool = "";
 
 document.title = profile.name + " — Branchlog";
-$("#identity-name").textContent = profile.name;
-$("#intro-copy").textContent = profile.intro;
+setupProfile();
 $("#footer-credit").textContent = profile.name + " / Branchlog";
 $("#map-stage").innerHTML = repositoryGraph(historyItems, branches);
 const mapHint = $("#map-revision");
@@ -39,7 +40,14 @@ branches.forEach(b => filter.add(new Option(b.label, b.id)));
 
 function renderLog() {
   const query = search.value.toLowerCase().trim();
+  renderedTool = new URLSearchParams(location.search).get("tech") || "";
+  const activeTool = $("#active-tool");
+  activeTool.hidden = !renderedTool;
+  activeTool.href = stackFilterUrl("");
+  activeTool.setAttribute("aria-label", "Clear technology filter: " + renderedTool);
+  activeTool.querySelector(".active-tool-label").textContent = renderedTool;
   displayed = historyItems.filter(item => {
+    if (renderedTool && !item.stack.includes(renderedTool)) return false;
     const haystack = [item.title, item.summary, item.branch, item.kind, item.hash, "M" + serial(item.number), item.date, ...item.stack].join(" ").toLowerCase();
     return (filter.value === "all" || filter.value === item.branch) && query.split(/\s+/).every(term => haystack.includes(term));
   });
@@ -92,7 +100,13 @@ function drawRails() {
 }
 search.addEventListener("input", renderLog);
 filter.addEventListener("change", renderLog);
-$("#reset").addEventListener("click", () => { filter.value="all"; search.value=""; renderLog(); search.focus(); });
+$("#reset").addEventListener("click", () => {
+  history.replaceState(null, "", stackFilterUrl(""));
+  filter.value = "all";
+  search.value = "";
+  renderLog();
+  search.focus();
+});
 new ResizeObserver(scheduleRails).observe(entries);
 document.fonts.ready.then(scheduleRails);
 renderLog();
@@ -185,6 +199,20 @@ function closePanel() {
 document.addEventListener("click", (event) => {
   if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
   const link = event.target.closest("a");
+  if (link?.hasAttribute("data-stack-filter")) {
+    event.preventDefault();
+    // Entering from the stack shows all projects for that tool. Removing the
+    // chip within the log preserves any search or branch filter the reader set.
+    if (link.id !== "active-tool") {
+      filter.value = "all";
+      search.value = "";
+    }
+    history.pushState(null, "", link.href);
+    renderLog();
+    $("#log-title").focus({preventScroll: true});
+    $("#log").scrollIntoView({block: "start"});
+    return;
+  }
   const hash = link?.getAttribute("href");
   if (!hash || !isPanelHash(hash)) return;
   event.preventDefault();
@@ -193,6 +221,10 @@ document.addEventListener("click", (event) => {
   renderPanel();
 });
 window.addEventListener("hashchange", renderPanel);
+window.addEventListener("popstate", () => {
+  const tool = new URLSearchParams(location.search).get("tech") || "";
+  if (tool !== renderedTool) renderLog();
+});
 $("#close-panel").addEventListener("click", closePanel);
 panel.addEventListener("cancel", e=>{ e.preventDefault(); closePanel(); });
 panel.addEventListener("click", e=>{
@@ -203,8 +235,8 @@ panel.addEventListener("click", e=>{
 content.addEventListener("click", async event=>{
   const branchButton = event.target.closest("[data-show-branch]");
   if (branchButton) {
-    search.value=""; filter.value=branchButton.dataset.showBranch; renderLog();
-    history.replaceState(null, "", "#log"); renderPanel(); $("#log").scrollIntoView({block:"start"}); filter.focus({preventScroll:true}); return;
+    search.value=""; filter.value=branchButton.dataset.showBranch;
+    history.replaceState(null, "", stackFilterUrl("")); renderLog(); renderPanel(); $("#log").scrollIntoView({block:"start"}); filter.focus({preventScroll:true}); return;
   }
   const button = event.target.closest("[data-copy]");
   if (!button) return;

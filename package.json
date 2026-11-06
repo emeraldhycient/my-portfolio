@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "node dev.mjs",
     "start": "npm run dev",
-    "check": "node --check dist/app.js && node --check dist/art.js && node --check dist/portfolio.js"
-  }
+    "build:journal": "esbuild src/journal.js --bundle --format=esm --target=es2020 --minify --outfile=dist/journal/stream.js",
+    "check": "node --check dist/app.js && node --check dist/art.js && node --check dist/profile.js && node --check dist/banner.js && node --check dist/portfolio.js && node --check src/journal.js && node --check dist/journal/stream.js"
+  },
+  "dependencies": { "@portabletext/to-html": "6.0.0" },
+  "devDependencies": { "esbuild": "0.28.2" }
 }

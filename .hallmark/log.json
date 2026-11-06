@@ -1,6 +1,15 @@
 [
   {
     "date": "2026-11-06",
+    "macrostructure": "Long Document",
+    "theme": "Dark editorial with warm paper alternate",
+    "enrichment": "Original coastal banner and portrait; eight-second lighthouse loop",
+    "nav": "Compact masthead",
+    "footer": "Ft2 inline single line",
+    "brief": "Centered developer profile with dashed rules, contact row, interactive tech stack and project log"
+  },
+  {
+    "date": "2026-11-06",
     "macrostructure": "Workbench",
     "theme": "Coral",
     "enrichment": "E5 interactive SVG branch map",

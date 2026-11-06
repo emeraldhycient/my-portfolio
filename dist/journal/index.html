@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111411" data-dark="#111411" data-light="#f8f7f3">
+  <meta name="description" content="A chronological journal of work, engineering decisions, and experience.">
+  <title>Journal — Branchlog</title>
+  <link rel="icon" type="image/svg+xml" href="../icon.svg">
+  <link rel="stylesheet" href="../site.css">
+  <link rel="stylesheet" href="../profile.css">
+  <link rel="stylesheet" href="./journal.css">
+  <script>try { if (localStorage.getItem("branchlog-theme") === "light") document.documentElement.dataset.theme = "light"; } catch {}</script>
+  <script type="module" src="./stream.js"></script>
+</head>
+<body id="top">
+  <a class="skip" href="#journal-main">Skip to journal</a>
+  <header class="mast"><div class="shell mast-inner">
+    <a class="wordmark" href="../" aria-label="Branchlog home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-label">Branchlog<span class="word-period">.</span></span></a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="../#log">Work</a><a href="./" aria-current="page">Journal</a><a href="../#stack">Stack</a><a href="../#connect">Contact</a>
+      <button id="theme-toggle" type="button" class="theme-toggle" aria-label="Switch to light theme"></button>
+    </nav>
+  </div></header>
+  <main id="journal-main" class="shell journal-shell">
+    <div id="stream-view">
+      <header class="journal-intro"><div class="journal-links"><a href="../" class="section-link">← Portfolio</a><a class="section-link" href="https://branchlog-uin9wku4.sanity.studio/" target="_blank" rel="noopener noreferrer">Writing Studio ↗</a></div>
+        <h1>Journal<span>.</span></h1><p>Field notes on projects, decisions, and lessons from working with other people.</p>
+      </header>
+      <div class="journal-toolbar ruled"><nav id="kind-nav" aria-label="Filter journal entries"></nav><span id="stream-source"></span></div>
+      <div id="stream-list" class="stream-list" aria-label="Journal entries"></div>
+      <div class="stream-actions"><button id="load-more" type="button" class="secondary" hidden>Load earlier entries</button></div>
+    </div>
+    <article id="entry-view" class="reading-view" hidden></article>
+    <p id="journal-status" role="status" class="sr-only"></p>
+    <noscript><p class="journal-message">Enable JavaScript to load the journal stream.</p></noscript>
+  </main>
+  <footer class="foot"><div class="shell foot-inner"><span class="foot-name"><span class="brand-mark" aria-hidden="true"></span><span id="journal-credit"></span></span><a href="#top">Back to top ↑</a></div></footer>
+</body></html>

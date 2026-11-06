@@ -1,44 +1,83 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f8f7f3">
+  <meta name="theme-color" content="#111411" data-dark="#111411" data-light="#f8f7f3">
   <meta name="description" content="A developer portfolio told through a Git graph and a migration log. Follow the branches and open the project notes.">
   <title>Branchlog — Developer portfolio</title>
   <link rel="icon" type="image/svg+xml" href="./icon.svg">
   <link rel="preload" href="./fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="./site.css">
+  <link rel="stylesheet" href="./profile.css">
+  <script>
+    try {
+      if (localStorage.getItem("branchlog-theme") === "light") {
+        document.documentElement.dataset.theme = "light";
+        document.querySelector('meta[name="theme-color"]').content = "#f8f7f3";
+      }
+    } catch { /* Default to the dark edition when storage is unavailable. */ }
+  </script>
   <script type="module" src="./app.js"></script>
 </head>
 <body id="top">
   <a class="skip" href="#log">Skip to migration log</a>
   <header class="mast">
     <div class="shell mast-inner">
-      <a class="wordmark" href="#top" aria-label="Branchlog home"><span class="brand-mark" aria-hidden="true"></span>Branchlog<span class="word-period">.</span></a>
+      <a class="wordmark" href="#top" aria-label="Branchlog home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-label">Branchlog<span class="word-period">.</span></span></a>
       <nav class="nav-links" aria-label="Main navigation">
-        <a class="nav-work" href="#log"><span class="status-dot" aria-hidden="true"></span>Work</a>
-        <a href="#readme">README</a>
-        <a class="nav-contact" href="#contact">Contact <span data-icon="upRight"></span></a>
+        <a href="#log">Work</a>
+        <a href="./journal/">Journal</a>
+        <a href="#stack">Stack</a>
+        <a href="#connect">Contact</a>
+        <button id="theme-toggle" type="button" class="theme-toggle" aria-label="Switch to light theme"></button>
       </nav>
     </div>
   </header>
   <main class="shell">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="intro">
-        <div class="identity"><span class="identity-mark" aria-hidden="true"></span><span id="identity-name"></span><span class="identity-slash">/</span><span>Portfolio</span></div>
-        <h1 id="hero-title">Built in<br>branches<span>.</span></h1>
-        <p id="intro-copy"></p>
-        <a class="primary" href="#log">Explore the log <span data-icon="down"></span></a>
+    <section aria-labelledby="profile-name">
+      <div class="banner-frame">
+        <div class="landscape-window">
+          <img class="landscape" src="./images/coast-banner.webp"
+            srcset="./images/coast-banner-small.webp 820w, ./images/coast-banner.webp 1640w"
+            sizes="(max-width: 850px) 96vw, 820px" width="1640" height="547" fetchpriority="high"
+            alt="A lighthouse on a pine-covered headland at dusk.">
+          <video id="coast-motion" class="landscape-motion" data-src="./images/coast-loop.mp4"
+            aria-hidden="true" muted loop playsinline preload="none" disablepictureinpicture></video>
+          <button id="banner-control" class="banner-control" type="button" aria-label="Play banner animation" hidden></button>
+        </div>
       </div>
-      <figure class="map" aria-labelledby="map-title" aria-describedby="map-help">
-        <figcaption class="map-head"><span class="map-title"><span data-icon="topology"></span><span id="map-title">Repository graph</span></span><span class="map-fig">FIG. 01</span></figcaption>
-        <div class="map-stage" id="map-stage"></div>
-        <div class="map-foot"><div class="map-legend" id="map-legend"></div><span class="map-revision" id="map-revision"></span></div>
-        <span class="sr-only" id="map-help">Select a commit to read its migration.</span>
-      </figure>
+      <div class="profile-band ruled">
+        <img class="portrait" src="./images/jules-avatar.webp" width="106" height="106" alt="">
+        <div class="profile-info">
+          <h1 id="profile-name"></h1>
+          <p class="profile-role" id="profile-role"></p>
+          <p class="profile-meta"><span><span data-icon="pin"></span><span id="profile-location"></span></span><span id="profile-handle"></span></p>
+        </div>
+        <a class="profile-work" href="#log">View work <span data-icon="down"></span></a>
+      </div>
     </section>
-    <section class="log" id="log" aria-labelledby="log-title">
+    <section class="about-section ruled" id="about" aria-labelledby="about-title">
+      <div class="section-heading"><h2 id="about-title">About</h2><a href="#readme" class="section-link">Full README <span data-icon="right"></span></a></div>
+      <div class="about-body">
+        <div class="about-prose"><p id="intro-copy"></p><p id="about-aside"></p></div>
+        <figure class="map" aria-labelledby="map-title" aria-describedby="map-help">
+          <figcaption class="map-head"><span class="map-title"><span data-icon="topology"></span><span id="map-title">Repository graph</span></span></figcaption>
+          <div class="map-stage" id="map-stage"></div>
+          <div class="map-foot"><div class="map-legend" id="map-legend"></div><span class="map-revision" id="map-revision"></span></div>
+          <span class="sr-only" id="map-help">Select a commit to read its migration.</span>
+        </figure>
+      </div>
+    </section>
+    <section id="connect" class="ruled" aria-labelledby="connect-title">
+      <div class="section-heading"><h2 id="connect-title">Contact</h2></div>
+      <div id="contact-links" class="contact-grid"></div>
+    </section>
+    <section id="stack" class="ruled" aria-labelledby="stack-title">
+      <div class="section-heading stack-heading"><h2 id="stack-title">Tech stack</h2><p class="stack-help">Select a tool to see its projects.</p></div>
+      <dl class="tools-list" id="tools"></dl>
+    </section>
+    <section class="log ruled" id="log" aria-labelledby="log-title">
       <div class="log-head">
         <div class="log-title"><h2 id="log-title" tabindex="-1">Migration log</h2><span class="count" id="log-count"></span></div>
         <div class="controls">
@@ -55,6 +94,7 @@
           </label>
         </div>
       </div>
+      <a class="active-tool" id="active-tool" data-stack-filter hidden><span class="active-tool-label"></span><span data-icon="close"></span></a>
       <div class="log-bar" aria-hidden="true"><span class="rail-heading">Graph</span><span class="entry-heading">Migration / project</span><span class="branch-heading">Branch</span></div>
       <div class="history">
         <svg id="rails" aria-hidden="true" focusable="false"></svg>

@@ -68,3 +68,43 @@
 }
 @font-face { font-family: "Geist"; src: url("./fonts/geist-latin.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "Geist Mono"; src: url("./fonts/geist-mono-latin.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Instrument Serif"; src: url("./fonts/instrument-serif.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+:root {
+  --font-editorial: "Instrument Serif", Georgia, serif;
+  --color-frame: oklch(77.5% .012 85);
+  --color-brand-on: oklch(98% .004 85);
+  --color-banner-base: oklch(31% .046 185);
+  --color-motion-bg: oklch(18% .012 145 / .88);
+  --color-motion-ink: oklch(95% .013 85);
+  --color-motion-border: oklch(95% .013 85 / .36);
+  --color-avatar-base: oklch(87% .03 85);
+  --column: 52rem;
+  --gutter: clamp(1rem, 2.4vw, 1.65rem);
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-paper: oklch(17.6% .006 145);
+  --color-paper-raised: oklch(20.5% .007 145);
+  --color-wash: oklch(23.5% .008 145);
+  --color-ink: oklch(95% .013 85);
+  --color-body: oklch(84.5% .013 88);
+  --color-muted: oklch(69% .013 110);
+  --color-rule: oklch(35% .012 128);
+  --color-frame: oklch(33.5% .011 128);
+  --color-quiet-rule: oklch(28.5% .009 128);
+  --color-accent: oklch(72% .153 44);
+  --color-accent-ink: oklch(78.5% .135 49);
+  --color-accent-wash: oklch(30% .048 46);
+  --color-systems-ink: oklch(79% .092 259);
+  --color-systems-wash: oklch(28% .043 264);
+  --color-lab-ink: oklch(80% .105 151);
+  --color-lab-wash: oklch(27.5% .037 156);
+  --color-dark: oklch(20.5% .009 155);
+  --color-dark-grid: oklch(37% .014 145);
+  --color-dark-rule: oklch(32% .011 145);
+  --color-dark-muted: oklch(77% .012 98);
+  --color-focus: oklch(82% .135 159);
+  --color-scrim: oklch(10% .009 130 / .75);
+  --color-brand-on: oklch(19.5% .012 65);
+}

@@ -22,6 +22,13 @@ const icons = {
   copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/>',
   check: '<path d="m4 12 5 5L20 6"/>',
   mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
+  download: '<path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/>',
+  github: '<path d="M9 21v-3.7c-3.7.9-4.8-1.5-5.3-2.5m10.8 6.2v-3.5c0-.9-.3-1.5-.7-1.9 2.5-.3 5-1.3 5-5.6a4.4 4.4 0 0 0-1.2-3.1c.1-.4.5-1.6-.1-3.2 0 0-1-.3-3.2 1.2a11.4 11.4 0 0 0-5.8 0C6.3 3.4 5.3 3.7 5.3 3.7c-.6 1.6-.2 2.8-.1 3.2A4.4 4.4 0 0 0 4 10c0 4.2 2.5 5.3 5 5.6-.4.4-.7 1-.7 1.8"/>',
+  linkedin: '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="7.4" cy="8" r=".8" fill="currentColor"/><path d="M7.4 11v6m4-6v6m0-3.8c0-2.9 5-3.1 5 0V17"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 1.8v2.4m0 15.6v2.4M1.8 12h2.4m15.6 0h2.4M4.7 4.7l1.7 1.7m11.2 11.2 1.7 1.7M4.7 19.3l1.7-1.7M17.6 6.4l1.7-1.7"/>',
+  moon: '<path d="M19.8 15.2A8.4 8.4 0 0 1 8.8 4.2a8.4 8.4 0 1 0 11 11Z"/>',
+  play: '<path d="M8 5.5v13l10-6.5z" fill="currentColor" stroke="none"/>',
+  pause: '<path d="M8.5 6v12m7-12v12" stroke-width="3"/>',
   link: '<path d="m10 13 4-4m-5 1-2 2a4 4 0 0 0 6 6l2-2m-6-5 2-2a4 4 0 0 1 6 6l-2 2"/>',
 };
 export const icon = (name) => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">${icons[name] || ""}</svg>`;

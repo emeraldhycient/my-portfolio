@@ -1,4 +1,8 @@
 .DS_Store
 node_modules/
+.local/
+**/.env
+**/.env.*
+.coast-render-*/
 .sites-runtime/
 .sites-checkout*/
