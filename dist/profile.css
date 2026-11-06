@@ -276,7 +276,8 @@ a.contact-cell:focus-visible { outline-offset: -3px; }
 @media (max-width: 580px) {
   .about-body { grid-template-columns: minmax(0,1fr); gap: .9rem; }
   .map-stage { margin-block: .3rem .1rem; }
-  .map-stage > svg { height: clamp(146px, 40vw, 198px); } /* the 244-high graph at the old 214 scale */
+  /* Fixed height; the width follows the viewBox, so a long history scrolls with no blank bands. */
+  .map-stage > svg { height: clamp(146px, 40vw, 198px); width: auto; min-width: 100%; }
   .contact-grid .contact-cell { min-height: 54px; }
   .profile-band { padding-block: 1.05rem; gap: .85rem; }
   .profile-work { display: none; }

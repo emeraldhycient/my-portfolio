@@ -204,7 +204,7 @@ function renderPanel() {
   if (panel.open && activePage === hash) return;
   activePage = hash;
   let path, html, title;
-  if (hash === "#readme") { path = "README.md"; html = readme(); title = profile.name; }
+  if (hash === "#readme") { path = "README.md"; html = readme(); title = "README"; }
   else if (hash === "#contact") { path = "contact"; html = contact(); title = "Contact"; }
   else {
     let id;

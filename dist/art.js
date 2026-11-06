@@ -83,7 +83,7 @@ export function repositoryGraph(items, branches) {
   const first = [...points.values()][0];
   const head = points.get(last?.id);
   const tail = first && head ? `<path class="map-tail" d="M0 ${first.y}H${first.x} M${head.x} ${head.y}H${graphWidth}"/>` : "";
-  const width = graphWidth > 535 ? ` style="width:${graphWidth / 535 * 100}%"` : "";
+  const width = graphWidth > 535 ? ` style="--graph-width:${graphWidth / 535 * 100}%"` : "";
   return `<svg viewBox="0 0 ${graphWidth} ${height}"${width} role="group" aria-label="Project history, oldest on the left"><g aria-hidden="true">${tail}${paths.join("")}</g>${nodes.join("")}</svg>`;
 }
 

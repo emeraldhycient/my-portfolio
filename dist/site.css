@@ -59,7 +59,7 @@ h1 { font-size: var(--text-display); font-weight: 565; line-height: .96; letter-
 .map-title .icon { width: 1.08rem; height: 1.08rem; }
 .map-fig, .map-revision { color: var(--color-dark-muted); font: 430 .63rem/1 var(--font-mono); letter-spacing: .055em; }
 .map-stage { margin: .85rem 0 .32rem; background-image: radial-gradient(circle, var(--color-dark-grid) .8px, transparent 1px); background-size: 15px 15px; background-position: center; }
-.map-stage > svg { display: block; width: 100%; height: auto; }
+.map-stage > svg { display: block; width: var(--graph-width, 100%); height: auto; }
 .map-foot { border-top: 1px solid var(--color-dark-rule); padding-block: .88rem .98rem; gap: 1rem; }
 .map-legend { display: flex; align-items: center; gap: clamp(.72rem, 1.7vw, 1.5rem); font: 440 .66rem/1.2 var(--font-mono); }
 .legend-key { display: inline-flex; align-items: center; gap: .38rem; }
