@@ -1,8 +1,3 @@
-/* Hallmark · macrostructure: Workbench · theme: Coral · tone: technical · anchor hue: vermilion
- * nav: N9 edge-aligned · footer: Ft2 inline · enrichment: interactive vector branch map
- * audience: people reviewing an engineer's work · use: follow migrations into project notes
- * pre-emit critique: P5 H5 E4 S5 R5 V4
- */
 @import url("./tokens.css");
 *, *::before, *::after { box-sizing: border-box; }
 html, body { overflow-x: clip; }

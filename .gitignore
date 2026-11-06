@@ -4,5 +4,3 @@ node_modules/
 **/.env
 **/.env.*
 .coast-render-*/
-.sites-runtime/
-.sites-checkout*/
