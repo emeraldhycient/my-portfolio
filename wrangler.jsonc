@@ -1,0 +1,8 @@
+// Cloudflare Worker that serves dist/ as static files. Deploy with `npm run deploy`.
+{
+  "name": "my-portfolio",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}
