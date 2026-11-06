@@ -63,7 +63,6 @@ function contactRow(resume, resumeStatus = "Loading projects") {
 
 export function setupProfile() {
   document.getElementById("profile-name").textContent = profile.name;
-  document.getElementById("profile-monogram").textContent = profile.name.split(/\s+/).map(part => part[0]).join("").slice(0, 2);
   document.getElementById("profile-role").textContent = profile.role;
   document.getElementById("profile-location").textContent = profile.location;
   document.getElementById("profile-handle").textContent = "@" + profile.handle;
