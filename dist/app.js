@@ -20,7 +20,8 @@ let displayed = historyItems;
 let queuedRailFrame = 0;
 let renderedTool = "";
 
-document.title = profile.name + " — Branchlog";
+const siteTitle = profile.name + " — " + profile.role;
+document.title = siteTitle;
 setupProfile();
 $("#footer-credit").textContent = profile.name + " / Branchlog";
 $("#map-stage").innerHTML = '<p class="map-message">Loading graph…</p>';
@@ -170,7 +171,7 @@ function renderPanel() {
       if (opener?.isConnected) opener.focus({preventScroll:true});
       else $("#log-title").focus({preventScroll:true});
     }
-    activePage = ""; opener = null; document.title = profile.name + " — Branchlog"; return;
+    activePage = ""; opener = null; document.title = siteTitle; return;
   }
   if (panel.open && activePage === hash) return;
   activePage = hash;
@@ -190,7 +191,7 @@ function renderPanel() {
   }
   $("#panel-path").innerHTML = icon(hash === "#readme" ? "file" : hash === "#contact" ? "mail" : "commit") + "<span>"+esc(path)+"</span>";
   content.innerHTML = html;
-  document.title = title + " — Branchlog";
+  document.title = title + " — " + profile.name;
   if (!panel.open) panel.showModal();
   content.scrollTop = 0;
   $("#panel-title").focus({preventScroll:true});
