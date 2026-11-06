@@ -66,4 +66,4 @@ const server = http.createServer((req, res) => {
   createReadStream(file, {start, end}).pipe(res);
 });
 server.on("error", (error) => { console.error(error.message); observer.close(); process.exitCode = 1; });
-server.listen(port, "127.0.0.1", () => console.log("Branchlog with live reload: http://127.0.0.1:" + server.address().port + "/"));
+server.listen(port, "127.0.0.1", () => console.log("Portfolio with live reload: http://127.0.0.1:" + server.address().port + "/"));
