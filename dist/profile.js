@@ -17,10 +17,12 @@ function techStack(migrations) {
   const other = [...used].filter(tool => !listed.has(tool)).sort();
   const groups = [...stackGroups, { label: "Other", tools: other }];
   return groups.flatMap(group => {
-    const tools = group.tools.filter(tool => used.has(tool));
-    if (!tools.length) return [];
-    const links = tools.map(tool => `<a href="${esc(stackFilterUrl(tool))}" data-stack-filter aria-label="Show projects using ${esc(tool)}">${esc(tool)}</a>`);
-    return [`<div class="tool-group"><dt>${esc(group.label)}</dt><dd>${links.join("")}</dd></div>`];
+    if (!group.tools.length) return [];
+    // A tool no published project lists yet has no log to filter, so it is plain text.
+    const items = group.tools.map(tool => used.has(tool)
+      ? `<a href="${esc(stackFilterUrl(tool))}" data-stack-filter aria-label="Show projects using ${esc(tool)}">${esc(tool)}</a>`
+      : `<span class="tool-plain">${esc(tool)}</span>`);
+    return [`<div class="tool-group"><dt>${esc(group.label)}</dt><dd>${items.join("")}</dd></div>`];
   }).join("");
 }
 

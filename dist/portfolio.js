@@ -28,12 +28,12 @@ export const branches = [
   { id: "ventures", label: "ventures", description: "Companies I started" },
 ];
 
-// Tools in these groups appear when at least one project uses them. New,
-// uncategorized tools from a project's stack are listed under “Other”.
+// Every tool listed here appears in the tech stack. Tools a project uses link to
+// its filtered log; uncategorized tools from a project's stack go under “Other”.
 export const stackGroups = [
   { label: "Languages", tools: ["TypeScript", "JavaScript", "Python", "C#", "Dart"] },
   { label: "Interfaces", tools: ["React", "Next.js", "React Native", "Flutter", "Vite", "Tailwind CSS", "three.js"] },
   { label: "Back end & data", tools: ["Node.js", "NestJS", ".NET", "Prisma", "PostgreSQL", "MongoDB", "Laravel", "Zod"] },
-  { label: "ML & AI", tools: ["LangGraph", "Claude API", "scikit-learn", "TensorFlow", "Keras"] },
-  { label: "Cloud", tools: ["AWS", "Railway", "Cloudflare"] },
+  { label: "ML & AI", tools: ["LangGraph", "Claude API", "ChatGPT", "scikit-learn", "TensorFlow", "Keras"] },
+  { label: "Cloud", tools: ["AWS", "Azure", "Railway", "Cloudflare"] },
 ];
