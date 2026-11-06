@@ -7,7 +7,7 @@ export function setupBanner() {
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   let pausedByUser = false;
-  try { pausedByUser = sessionStorage.getItem("branchlog-pause-banner") === "yes"; } catch { /* Optional preference. */ }
+  try { pausedByUser = sessionStorage.getItem("portfolio-pause-banner") === "yes"; } catch { /* Optional preference. */ }
   let wantsMotion = !reduced.matches && !pausedByUser;
   let inView = false;
   let failed = false;
@@ -45,7 +45,7 @@ export function setupBanner() {
   button.addEventListener("click", () => {
     wantsMotion = video.paused;
     pausedByUser = !wantsMotion;
-    try { sessionStorage.setItem("branchlog-pause-banner", pausedByUser ? "yes" : "no"); } catch { /* Optional preference. */ }
+    try { sessionStorage.setItem("portfolio-pause-banner", pausedByUser ? "yes" : "no"); } catch { /* Optional preference. */ }
     syncPlayback();
   });
   reduced.addEventListener("change", () => {

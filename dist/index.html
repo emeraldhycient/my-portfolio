@@ -4,15 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#111411" data-dark="#111411" data-light="#f8f7f3">
-  <meta name="description" content="A developer portfolio told through a Git graph and a migration log. Follow the branches and open the project notes.">
-  <title>Branchlog — Developer portfolio</title>
-  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <meta name="description" content="Hycient Igweze, Senior Full-Stack &amp; ML Engineer. AI products, ML pipelines and payment systems, told through a Git graph and a migration log.">
+  <meta name="author" content="Hycient Igweze">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Hycient Igweze — Senior Full-Stack &amp; ML Engineer">
+  <meta property="og:description" content="AI products, ML pipelines and payment systems, told through a Git graph and a migration log.">
+  <meta property="og:site_name" content="Hycient Igweze">
+  <meta property="og:locale" content="en_GB">
+  <meta property="profile:first_name" content="Hycient">
+  <meta property="profile:last_name" content="Igweze">
+  <meta name="twitter:card" content="summary">
+  <title>Hycient Igweze — Senior Full-Stack &amp; ML Engineer</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./favicon-192.png">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <link rel="preload" href="./fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="./site.css">
   <link rel="stylesheet" href="./profile.css">
   <script>
     try {
-      if (localStorage.getItem("branchlog-theme") === "light") {
+      if (localStorage.getItem("portfolio-theme") === "light") {
         document.documentElement.dataset.theme = "light";
         document.querySelector('meta[name="theme-color"]').content = "#f8f7f3";
       }
@@ -24,7 +35,7 @@
   <a class="skip" href="#log">Skip to migration log</a>
   <header class="mast">
     <div class="shell mast-inner">
-      <a class="wordmark" href="#top" aria-label="Branchlog home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-label">Branchlog<span class="word-period">.</span></span></a>
+      <a class="wordmark" href="#top" aria-label="Hycient Igweze home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-label">Hycient<span class="brand-surname"> Igweze</span><span class="word-period">.</span></span></a>
       <nav class="nav-links" aria-label="Main navigation">
         <a href="#log">Work</a>
         <a href="./journal/">Journal</a>
@@ -48,7 +59,7 @@
         </div>
       </div>
       <div class="profile-band ruled">
-        <img class="portrait" src="./images/jules-avatar.webp" width="106" height="106" alt="">
+        <img class="portrait" src="./images/avatar.webp" width="106" height="106" alt="Illustrated portrait of Hycient Igweze">
         <div class="profile-info">
           <h1 id="profile-name"></h1>
           <p class="profile-role" id="profile-role"></p>
@@ -104,7 +115,7 @@
       <div id="empty" class="empty" hidden><h3>No matching migrations.</h3><p>Try a project name, technology, or commit hash.</p><button class="secondary" id="reset" type="button">Clear filters <span data-icon="undo"></span></button></div>
       <p class="sr-only" role="status" id="result-status"></p>
       <noscript><p>Enable JavaScript to explore the project graph and migration notes.</p></noscript>
-      <div class="log-end"><span data-icon="commit"></span><span id="end-label">End of log</span><span class="end-rule"></span><a class="section-link edit-work" href="https://branchlog-uin9wku4.sanity.studio/" target="_blank" rel="noopener noreferrer">Manage migrations <span data-icon="upRight"></span></a></div>
+      <div class="log-end"><span data-icon="commit"></span><span id="end-label">End of log</span><span class="end-rule"></span></div>
     </section>
   </main>
   <footer class="foot">

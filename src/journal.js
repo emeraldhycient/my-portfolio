@@ -67,7 +67,7 @@ function showArticle(entry) {
     <time datetime="${esc(entry.publishedAt)}">${esc(date)} · ${esc(clock(entry.publishedAt))} UTC</time>${entry.example?"<span>Sample entry</span>":""}</div>
     <h1>${esc(entry.title)}</h1><p class="article-summary">${esc(entry.summary||"")}</p>
     <div class="article-body">${toHTML(Array.isArray(entry.body) ? entry.body : [])}</div>${back}`;
-  document.title = entry.title + " — Branchlog Journal";
+  document.title = entry.title + " — " + profile.name;
 }
 function showError(container) {
   container.innerHTML = '<div class="journal-message"><p>The journal could not load. Try again to read the published entries.</p><button type="button" class="secondary" data-retry>Retry</button></div>';
@@ -81,7 +81,7 @@ async function readRoute(append = false) {
   const target = reading ? article : list;
   stream.hidden = reading;
   article.hidden = !reading;
-  document.title = "Journal — Branchlog";
+  document.title = "Journal — " + profile.name;
   target.setAttribute("aria-busy","true");
   renderFilters();
   if (!append) {

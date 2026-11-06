@@ -17,10 +17,12 @@ function techStack(migrations) {
   const other = [...used].filter(tool => !listed.has(tool)).sort();
   const groups = [...stackGroups, { label: "Other", tools: other }];
   return groups.flatMap(group => {
-    const tools = group.tools.filter(tool => used.has(tool));
-    if (!tools.length) return [];
-    const links = tools.map(tool => `<a href="${esc(stackFilterUrl(tool))}" data-stack-filter aria-label="Show projects using ${esc(tool)}">${esc(tool)}</a>`);
-    return [`<div class="tool-group"><dt>${esc(group.label)}</dt><dd>${links.join("")}</dd></div>`];
+    if (!group.tools.length) return [];
+    // A tool no published project lists yet has no log to filter, so it is plain text.
+    const items = group.tools.map(tool => used.has(tool)
+      ? `<a href="${esc(stackFilterUrl(tool))}" data-stack-filter aria-label="Show projects using ${esc(tool)}">${esc(tool)}</a>`
+      : `<span class="tool-plain">${esc(tool)}</span>`);
+    return [`<div class="tool-group"><dt>${esc(group.label)}</dt><dd>${items.join("")}</dd></div>`];
   }).join("");
 }
 
@@ -34,16 +36,20 @@ function resumeDownload(migrations) {
     profile.name, profile.role + " · " + profile.location, profile.email, "",
     profile.intro, "", "FOCUS", profile.focus.join(" · "), "", "SELECTED WORK", ...work.map(item => "\n" + item),
   ];
-  if (profile.sample) text.push("", "Sample résumé for the Branchlog portfolio preview.");
+  if (profile.sample) text.push("", "Sample résumé for the portfolio preview.");
   return URL.createObjectURL(new Blob([text.join("\n") + "\n"], { type: "text/plain;charset=utf-8" }));
 }
 
+// A published CV (profile.resume.url) wins; the generated text résumé is the fallback.
+const resumeFile = () => profile.resume?.url ? { url: profile.resume.url, download: profile.resume.file || "resume.pdf" } : null;
+
 function contactRow(resume, resumeStatus = "Loading projects") {
+  const cv = resumeFile();
   const contacts = [
     { label: "GitHub", icon: "github", url: profile.social?.github, external: true },
     { label: "LinkedIn", icon: "linkedin", url: profile.social?.linkedin, external: true },
     { label: "Email", icon: "mail", url: "#contact" },
-    { label: "Résumé", icon: "download", url: resume, download: profile.handle + "-resume.txt" },
+    { label: "Résumé", icon: "download", url: cv?.url || resume, download: cv?.download || profile.handle + "-resume.txt" },
   ];
   return contacts.map(contact => {
     const leadingIcon = `<span class="contact-icon">${icon(contact.icon)}</span>`;
@@ -72,7 +78,7 @@ export function setupProfile() {
 let previousResume;
 export function updateProjectProfile(migrations) {
   if (previousResume) URL.revokeObjectURL(previousResume);
-  previousResume = resumeDownload(migrations);
+  previousResume = resumeFile() ? null : resumeDownload(migrations);
   document.getElementById("contact-links").innerHTML = contactRow(previousResume);
   document.getElementById("tools").innerHTML = techStack(migrations);
 }

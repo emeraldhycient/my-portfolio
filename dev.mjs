@@ -8,8 +8,8 @@ const port = Number(process.env.PORT || 4173);
 const clients = new Set();
 const mime = {
   ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8",
-  ".svg": "image/svg+xml", ".webp": "image/webp", ".gif": "image/gif", ".mp4": "video/mp4",
-  ".woff2": "font/woff2", ".txt": "text/plain; charset=utf-8",
+  ".svg": "image/svg+xml", ".png": "image/png", ".webp": "image/webp", ".gif": "image/gif", ".mp4": "video/mp4",
+  ".woff2": "font/woff2", ".txt": "text/plain; charset=utf-8", ".pdf": "application/pdf",
 };
 const live = '<script>(()=>{const feed=new EventSource("/__live");feed.addEventListener("change",()=>location.reload());})();</script>';
 let timer;
@@ -66,4 +66,4 @@ const server = http.createServer((req, res) => {
   createReadStream(file, {start, end}).pipe(res);
 });
 server.on("error", (error) => { console.error(error.message); observer.close(); process.exitCode = 1; });
-server.listen(port, "127.0.0.1", () => console.log("Branchlog with live reload: http://127.0.0.1:" + server.address().port + "/"));
+server.listen(port, "127.0.0.1", () => console.log("Portfolio with live reload: http://127.0.0.1:" + server.address().port + "/"));

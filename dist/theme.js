@@ -15,7 +15,7 @@ export function setupTheme() {
   update();
   toggle.addEventListener("click", () => {
     html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
-    try { localStorage.setItem("branchlog-theme", html.dataset.theme); } catch { /* Storage is optional. */ }
+    try { localStorage.setItem("portfolio-theme", html.dataset.theme); } catch { /* Storage is optional. */ }
     update();
   });
 }

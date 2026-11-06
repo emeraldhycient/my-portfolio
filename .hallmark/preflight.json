@@ -1,8 +1,0 @@
-{
-  "date": "2026-11-06",
-  "existingFramework": null,
-  "existingDesignSystem": null,
-  "existingMotionLibrary": null,
-  "implementation": "Static HTML, CSS and JavaScript modules",
-  "fonts": ["Geist", "Geist Mono"]
-}
