@@ -36,7 +36,7 @@ function resumeDownload(migrations) {
     profile.name, profile.role + " · " + profile.location, profile.email, "",
     profile.intro, "", "FOCUS", profile.focus.join(" · "), "", "SELECTED WORK", ...work.map(item => "\n" + item),
   ];
-  if (profile.sample) text.push("", "Sample résumé for the Branchlog portfolio preview.");
+  if (profile.sample) text.push("", "Sample résumé for the portfolio preview.");
   return URL.createObjectURL(new Blob([text.join("\n") + "\n"], { type: "text/plain;charset=utf-8" }));
 }
 

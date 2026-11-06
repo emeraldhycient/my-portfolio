@@ -23,7 +23,7 @@ let renderedTool = "";
 const siteTitle = profile.name + " — " + profile.role;
 document.title = siteTitle;
 setupProfile();
-$("#footer-credit").textContent = profile.name + " / Branchlog";
+$("#footer-credit").textContent = profile.name;
 $("#map-stage").innerHTML = '<p class="map-message">Loading graph…</p>';
 const mapHint = $("#map-revision");
 function showMapHint(target) {
@@ -226,7 +226,7 @@ function renderPanel() {
 }
 function closePanel() {
   if (!panel.open) return;
-  if (history.state?.branchlogOverlay) history.back();
+  if (history.state?.portfolioOverlay) history.back();
   else {
     history.replaceState(null, "", "#log"); renderPanel(); $("#log").scrollIntoView({block:"start"});
   }
@@ -252,7 +252,7 @@ document.addEventListener("click", (event) => {
   if (!hash || !isPanelHash(hash)) return;
   event.preventDefault();
   if (panel.open) history.replaceState(history.state, "", hash);
-  else { opener=link; history.pushState({branchlogOverlay:true}, "", hash); }
+  else { opener=link; history.pushState({portfolioOverlay:true}, "", hash); }
   renderPanel();
 });
 window.addEventListener("hashchange", renderPanel);

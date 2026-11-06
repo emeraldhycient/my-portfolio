@@ -122,6 +122,6 @@ export function cover(item) {
   const serial = String(item.number).padStart(3, "0");
   return `<svg class="cover art-${key}" viewBox="0 0 320 176" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" data-print="${++edition}">
     <rect class="print-paper" width="320" height="176"/>${drawings[key]()}
-    <g class="print-caption"><text x="13" y="19">PL. ${serial}</text><text x="307" y="164" text-anchor="end">BL / ${String(item.number).padStart(2,"0")}</text></g>
+    <g class="print-caption"><text x="13" y="19">PL. ${serial}</text><text x="307" y="164" text-anchor="end">HI / ${String(item.number).padStart(2,"0")}</text></g>
   </svg>`;
 }
