@@ -194,6 +194,17 @@ html:has(#panel[open]) { overflow-y: hidden; }
 .note-section ul { padding-left: 1.16rem; }
 .note-section li + li { margin-top: .26rem; }
 .note-section li::marker { color: var(--color-muted); font-size: .85em; }
+.note-links ul { list-style: none; padding: 0; border-top: 1px solid var(--color-quiet-rule); }
+.note-links li + li { margin-top: 0; }
+.note-links a { display: flex; align-items: center; justify-content: space-between; gap: .8rem; min-height: 44px; padding-block: .5rem; border-bottom: 1px solid var(--color-quiet-rule); color: var(--color-ink); font-weight: 520; }
+.note-links a:hover { color: var(--color-accent-ink); }
+.note-links .icon { flex: none; width: .95rem; height: .95rem; color: var(--color-muted); }
+.note-links a:hover .icon { color: currentColor; }
+.note-figure { margin: 1.35rem 0 0; }
+.note-figure a { display: block; overflow: hidden; border: 1px solid var(--color-rule); border-radius: 5px; }
+.note-figure img { display: block; width: 100%; height: auto; }
+.note-figure figcaption { display: flex; align-items: center; gap: .35rem; margin-top: .5rem; font: .66rem/1.4 var(--font-mono); color: var(--color-muted); }
+.note-figure figcaption .icon { width: .8rem; height: .8rem; }
 .note-stack { gap: .42rem; padding-block: 1.05rem; }
 .vis-label { margin-right: .2rem; }
 .stack-item { display: inline-block; background: var(--color-wash); color: var(--color-body); font: 440 .67rem/1.2 var(--font-mono); border: 1px solid var(--color-rule); border-radius: 3px; padding: .25rem .41rem; }

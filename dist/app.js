@@ -119,6 +119,32 @@ const content = $("#panel-content");
 const copyButton = (label, what) => `<button type="button" class="copy-button" data-copy="${what}">${icon("copy")}<span>${label}</span></button>`;
 const copyStatus = '<p class="copy-status" role="status"></p>';
 
+// Diagrams are site assets keyed by migration slug, so the CMS needs no image field.
+const figures = {
+  "multimodal-pipeline": {
+    src: "./images/multimodal-pipeline.png", width: 2400, height: 1350,
+    alt: "Pipeline diagram. A face image, a voice sample and customer data are preprocessed into image, audio and tabular features. The execution layer runs a face match, then a product recommendation, then a voice check; a failed check stops the flow, and the recommendation is shown only after both checks pass.",
+  },
+};
+const isExternal = (url) => /^https?:\/\//i.test(url);
+// Only web addresses and site paths are rendered; anything else from the CMS is dropped.
+const isSafeLink = (link) => link?.label && typeof link.url === "string" && (isExternal(link.url) || /^\/(?!\/)/.test(link.url));
+
+function projectFigure(item) {
+  const figure = Object.hasOwn(figures, item.id) ? figures[item.id] : null;
+  if (!figure) return "";
+  return `<figure class="note-figure"><a href="${esc(figure.src)}" target="_blank" rel="noopener noreferrer"><img src="${esc(figure.src)}" width="${figure.width}" height="${figure.height}" alt="${esc(figure.alt)}" loading="lazy" decoding="async"></a>
+    <figcaption>Diagram · Opens full size in a new tab ${icon("upRight")}</figcaption></figure>`;
+}
+
+function projectLinks(item) {
+  const links = (item.links || []).filter(isSafeLink);
+  if (!links.length) return "";
+  return `<section class="note-section note-links"><h3>Links</h3><ul>${links.map(link => isExternal(link.url)
+    ? `<li><a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer"><span>${esc(link.label)}</span>${icon("upRight")}</a></li>`
+    : `<li><a href="${esc(link.url)}"><span>${esc(link.label)}</span>${icon("right")}</a></li>`).join("")}</ul></section>`;
+}
+
 function projectNote(item) {
   const index = historyItems.indexOf(item);
   const older = historyItems[index+1], newer = historyItems[index-1];
@@ -130,7 +156,9 @@ function projectNote(item) {
     <p class="note-lede">${esc(item.summary)}</p>
     <div class="note-meta">${pill(item.branch)}<span><time datetime="${esc(item.date)}">${esc(shortDate(item.date))}</time></span><span class="note-hash">${icon("commit")}${esc(item.hash)}</span></div>
     ${item.before || item.after ? `<div class="change-block">${item.before ? `<section><h3><b class="diff-minus" aria-hidden="true">−</b> Before</h3><p>${esc(item.before)}</p></section>` : ""}${item.after ? `<section><h3><b class="diff-plus" aria-hidden="true">+</b> After</h3><p>${esc(item.after)}</p></section>` : ""}</div>` : ""}
+    ${projectFigure(item)}
     ${item.notes.length ? `<section class="note-section"><h3>Implementation notes</h3><ul>${item.notes.map(n=>`<li>${esc(n)}</li>`).join("")}</ul></section>` : ""}
+    ${projectLinks(item)}
     ${item.stack.length ? `<div class="note-stack"><span class="vis-label">Stack</span>${item.stack.map(s=>`<span class="stack-item">${esc(s)}</span>`).join("")}</div>` : ""}
     <div class="note-actions">${copyButton("Copy link","link")}${copyStatus}</div>
     <nav class="note-nav" aria-label="Other migrations">

@@ -5,7 +5,8 @@ const query = `*[_type == "migration" && defined(slug.current) && defined(title)
   "id": slug.current, title, number, date, hash, "branch": coalesce(branch, "main"),
   "parents": array::compact(parents[]->slug.current),
   "stack": coalesce(stack, []), "notes": coalesce(notes, []),
-  "summary": coalesce(summary, ""), "kind": coalesce(kind, ""), art, before, after
+  "summary": coalesce(summary, ""), "kind": coalesce(kind, ""), art, before, after,
+  "links": coalesce(links[]{label, url}, [])
 }`;
 
 export async function readMigrations(signal) {
