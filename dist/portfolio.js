@@ -34,6 +34,6 @@ export const stackGroups = [
   { label: "Languages", tools: ["TypeScript", "JavaScript", "Python", "C#", "Dart"] },
   { label: "Interfaces", tools: ["React", "Next.js", "React Native", "Flutter", "Vite", "Tailwind CSS", "three.js"] },
   { label: "Back end & data", tools: ["Node.js", "NestJS", ".NET", "Prisma", "PostgreSQL", "MongoDB", "Laravel", "Zod"] },
-  { label: "ML & AI", tools: ["LangGraph", "Claude API", "ChatGPT API", "Embeddings", "scikit-learn", "TensorFlow", "Keras"] },
+  { label: "ML & AI", tools: ["LangGraph", "Claude API", "ChatGPT API", "Embeddings", "scikit-learn", "TensorFlow", "Keras", "NumPy", "joblib", "TensorBoard", "Weights & Biases"] },
   { label: "Cloud", tools: ["AWS", "Azure", "Railway", "Cloudflare"] },
 ];
