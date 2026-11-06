@@ -1,0 +1,11 @@
+[
+  {
+    "date": "2026-11-06",
+    "macrostructure": "Workbench",
+    "theme": "Coral",
+    "enrichment": "E5 interactive SVG branch map",
+    "nav": "N9 edge-aligned",
+    "footer": "Ft2 inline single line",
+    "brief": "Developer portfolio as a Git graph and searchable migration log"
+  }
+]

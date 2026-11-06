@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f8f7f3">
+  <meta name="description" content="A developer portfolio told through a Git graph and a migration log. Follow the branches and open the project notes.">
+  <title>Branchlog — Developer portfolio</title>
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="preload" href="./fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./site.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body id="top">
+  <a class="skip" href="#log">Skip to migration log</a>
+  <header class="mast">
+    <div class="shell mast-inner">
+      <a class="wordmark" href="#top" aria-label="Branchlog home"><span class="brand-mark" aria-hidden="true"></span>Branchlog<span class="word-period">.</span></a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a class="nav-work" href="#log"><span class="status-dot" aria-hidden="true"></span>Work</a>
+        <a href="#readme">README</a>
+        <a class="nav-contact" href="#contact">Contact <span data-icon="upRight"></span></a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="intro">
+        <div class="identity"><span class="identity-mark" aria-hidden="true"></span><span id="identity-name"></span><span class="identity-slash">/</span><span>Portfolio</span></div>
+        <h1 id="hero-title">Built in<br>branches<span>.</span></h1>
+        <p id="intro-copy"></p>
+        <a class="primary" href="#log">Explore the log <span data-icon="down"></span></a>
+      </div>
+      <figure class="map" aria-labelledby="map-title" aria-describedby="map-help">
+        <figcaption class="map-head"><span class="map-title"><span data-icon="topology"></span><span id="map-title">Repository graph</span></span><span class="map-fig">FIG. 01</span></figcaption>
+        <div class="map-stage" id="map-stage"></div>
+        <div class="map-foot"><div class="map-legend" id="map-legend"></div><span class="map-revision" id="map-revision"></span></div>
+        <span class="sr-only" id="map-help">Select a commit to read its migration.</span>
+      </figure>
+    </section>
+    <section class="log" id="log" aria-labelledby="log-title">
+      <div class="log-head">
+        <div class="log-title"><h2 id="log-title" tabindex="-1">Migration log</h2><span class="count" id="log-count"></span></div>
+        <div class="controls">
+          <div class="search-field">
+            <span data-icon="search"></span>
+            <input type="search" id="search" placeholder="Search log" aria-label="Search migration log" autocomplete="off" spellcheck="false">
+            <kbd class="slash-key" aria-hidden="true">/</kbd>
+          </div>
+          <label class="branch-select">
+            <span data-icon="branch"></span>
+            <span class="sr-only">Filter by branch</span>
+            <select id="branch-filter"><option value="all">All branches</option></select>
+            <span data-icon="chevronDown"></span>
+          </label>
+        </div>
+      </div>
+      <div class="log-bar" aria-hidden="true"><span class="rail-heading">Graph</span><span class="entry-heading">Migration / project</span><span class="branch-heading">Branch</span></div>
+      <div class="history">
+        <svg id="rails" aria-hidden="true" focusable="false"></svg>
+        <ol class="entries" id="entries" aria-label="Migrations, newest first"></ol>
+      </div>
+      <div id="empty" class="empty" hidden><h3>No matching migrations.</h3><p>Try a project name, technology, or commit hash.</p><button class="secondary" id="reset" type="button">Clear filters <span data-icon="undo"></span></button></div>
+      <p class="sr-only" role="status" id="result-status"></p>
+      <noscript><p>Enable JavaScript to explore the project graph and migration notes.</p></noscript>
+      <div class="log-end" aria-hidden="true"><span data-icon="commit"></span><span id="end-label">End of log</span><span class="end-rule"></span></div>
+    </section>
+  </main>
+  <footer class="foot">
+    <div class="shell foot-inner"><span class="foot-name"><span class="brand-mark" aria-hidden="true"></span><span id="footer-credit"></span></span><a href="#top">Back to top <span data-icon="up"></span></a></div>
+  </footer>
+  <dialog id="panel" aria-labelledby="panel-title" aria-modal="true">
+    <div class="panel-bar"><span class="panel-path" id="panel-path"></span><button class="icon-button" id="close-panel" type="button" aria-label="Close panel"><span data-icon="close"></span></button></div>
+    <div id="panel-content" class="panel-content"></div>
+  </dialog>
+</body>
+</html>

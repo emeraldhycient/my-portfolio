@@ -1,0 +1,10 @@
+{
+  "name": "branchlog-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dev.mjs",
+    "start": "npm run dev",
+    "check": "node --check dist/app.js && node --check dist/art.js && node --check dist/portfolio.js"
+  }
+}
