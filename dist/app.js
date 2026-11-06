@@ -302,7 +302,10 @@ async function loadMigrations() {
     byId = new Map(items.map(item => [item.id, item]));
     loadState = "ready";
     updateProjectProfile(items);
-    $("#map-stage").innerHTML = items.length ? repositoryGraph(items, branches) : '<p class="map-message">No published migrations yet.</p>';
+    const stage = $("#map-stage");
+    stage.innerHTML = items.length ? repositoryGraph(items, branches) : '<p class="map-message">No published migrations yet.</p>';
+    // A long history overflows the figure; open on HEAD, like the newest-first log.
+    stage.scrollLeft = stage.scrollWidth;
     notice.hidden = items.length > 0;
     notice.textContent = items.length ? "" : "No published migrations yet.";
   } catch {
