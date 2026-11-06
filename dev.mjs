@@ -8,8 +8,8 @@ const port = Number(process.env.PORT || 4173);
 const clients = new Set();
 const mime = {
   ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8",
-  ".svg": "image/svg+xml", ".webp": "image/webp", ".gif": "image/gif", ".mp4": "video/mp4",
-  ".woff2": "font/woff2", ".txt": "text/plain; charset=utf-8",
+  ".svg": "image/svg+xml", ".png": "image/png", ".webp": "image/webp", ".gif": "image/gif", ".mp4": "video/mp4",
+  ".woff2": "font/woff2", ".txt": "text/plain; charset=utf-8", ".pdf": "application/pdf",
 };
 const live = '<script>(()=>{const feed=new EventSource("/__live");feed.addEventListener("change",()=>location.reload());})();</script>';
 let timer;

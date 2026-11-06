@@ -38,12 +38,16 @@ function resumeDownload(migrations) {
   return URL.createObjectURL(new Blob([text.join("\n") + "\n"], { type: "text/plain;charset=utf-8" }));
 }
 
+// A published CV (profile.resume.url) wins; the generated text résumé is the fallback.
+const resumeFile = () => profile.resume?.url ? { url: profile.resume.url, download: profile.resume.file || "resume.pdf" } : null;
+
 function contactRow(resume, resumeStatus = "Loading projects") {
+  const cv = resumeFile();
   const contacts = [
     { label: "GitHub", icon: "github", url: profile.social?.github, external: true },
     { label: "LinkedIn", icon: "linkedin", url: profile.social?.linkedin, external: true },
     { label: "Email", icon: "mail", url: "#contact" },
-    { label: "Résumé", icon: "download", url: resume, download: profile.handle + "-resume.txt" },
+    { label: "Résumé", icon: "download", url: cv?.url || resume, download: cv?.download || profile.handle + "-resume.txt" },
   ];
   return contacts.map(contact => {
     const leadingIcon = `<span class="contact-icon">${icon(contact.icon)}</span>`;
@@ -73,7 +77,7 @@ export function setupProfile() {
 let previousResume;
 export function updateProjectProfile(migrations) {
   if (previousResume) URL.revokeObjectURL(previousResume);
-  previousResume = resumeDownload(migrations);
+  previousResume = resumeFile() ? null : resumeDownload(migrations);
   document.getElementById("contact-links").innerHTML = contactRow(previousResume);
   document.getElementById("tools").innerHTML = techStack(migrations);
 }
