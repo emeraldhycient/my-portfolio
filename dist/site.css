@@ -65,8 +65,10 @@ h1 { font-size: var(--text-display); font-weight: 565; line-height: .96; letter-
 .legend-key { display: inline-flex; align-items: center; gap: .38rem; }
 .legend-key i { width: 6px; height: 6px; background: var(--graph-color); border-radius: 50%; }
 .branch-main { --line-color: var(--color-main-line); --graph-color: var(--color-dark-main); --label-ink: var(--color-accent-ink); --label-paper: var(--color-accent-wash); }
-.branch-systems { --line-color: var(--color-systems-line); --graph-color: var(--color-dark-systems); --label-ink: var(--color-systems-ink); --label-paper: var(--color-systems-wash); }
-.branch-lab { --line-color: var(--color-lab-line); --graph-color: var(--color-dark-lab); --label-ink: var(--color-lab-ink); --label-paper: var(--color-lab-wash); }
+/* The blue and green palettes keep their original token names; journal kinds use them too. */
+.branch-work { --line-color: var(--color-systems-line); --graph-color: var(--color-dark-systems); --label-ink: var(--color-systems-ink); --label-paper: var(--color-systems-wash); }
+.branch-ml { --line-color: var(--color-lab-line); --graph-color: var(--color-dark-lab); --label-ink: var(--color-lab-ink); --label-paper: var(--color-lab-wash); }
+.branch-ventures { --line-color: var(--color-ventures-line); --graph-color: var(--color-dark-ventures); --label-ink: var(--color-ventures-ink); --label-paper: var(--color-ventures-wash); }
 .map-line, .map-tail { fill: none; stroke-linecap: round; stroke-width: 2.8; }
 .map-line { stroke: var(--graph-color, var(--color-dark-muted)); }
 .map-tail { stroke: var(--color-dark-muted); stroke-width: 1.4; stroke-dasharray: 3 6; opacity: .6; }
@@ -137,6 +139,7 @@ h1 { font-size: var(--text-display); font-weight: 565; line-height: .96; letter-
 .art-wayfinder { --print-bg: var(--color-map-art); --print-ink: var(--color-trail); }
 .art-tracekit { --print-bg: var(--color-trace-paper); --print-ink: var(--color-trace-sand); }
 .art-scratchpad { --print-bg: var(--color-note); --print-ink: var(--color-note-ink); }
+.art-pipeline { --print-bg: var(--color-pipe); --print-ink: var(--color-pipe-ink); }
 .print-paper { fill: var(--print-bg); }
 .print-ink { stroke: var(--print-ink); }
 .print-fill, .print-caption { fill: var(--print-ink); }

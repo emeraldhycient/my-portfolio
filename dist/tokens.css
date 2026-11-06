@@ -22,13 +22,17 @@
   --color-main-line: oklch(66% .185 38);
   --color-systems-line: oklch(64.5% .135 262);
   --color-lab-line: oklch(61.5% .11 154);
+  --color-ventures-line: oklch(60% .16 318);
   --color-dark-main: oklch(75% .177 43);
   --color-dark-systems: oklch(75% .12 261);
   --color-dark-lab: oklch(79% .115 155);
+  --color-dark-ventures: oklch(75% .13 318);
   --color-systems-ink: oklch(44.5% .13 263);
   --color-systems-wash: oklch(93% .03 265);
   --color-lab-ink: oklch(42% .087 154);
   --color-lab-wash: oklch(93% .029 152);
+  --color-ventures-ink: oklch(45% .15 318);
+  --color-ventures-wash: oklch(93% .033 318);
   --color-scrim: oklch(18% .012 70 / .53);
   --color-relay: oklch(73.8% .173 43);
   --color-relay-ink: oklch(31% .075 39);
@@ -52,6 +56,8 @@
   --color-note-edge: oklch(63% .047 64);
   --color-note-ink: oklch(38% .045 63);
   --color-note-rule: oklch(77% .024 84);
+  --color-pipe: oklch(31% .075 325);
+  --color-pipe-ink: oklch(86% .075 35);
   --space-xs: .25rem;
   --space-sm: .5rem;
   --space-md: 1rem;
@@ -100,6 +106,8 @@
   --color-systems-wash: oklch(28% .043 264);
   --color-lab-ink: oklch(80% .105 151);
   --color-lab-wash: oklch(27.5% .037 156);
+  --color-ventures-ink: oklch(80% .1 318);
+  --color-ventures-wash: oklch(28% .05 318);
   --color-dark: oklch(20.5% .009 155);
   --color-dark-grid: oklch(37% .014 145);
   --color-dark-rule: oklch(32% .011 145);

@@ -39,7 +39,12 @@ export const mark = '<svg viewBox="0 0 32 32" aria-hidden="true" focusable="fals
 export function repositoryGraph(items, branches) {
   const order = [...items].sort((a, b) => a.number - b.number);
   const graphWidth = Math.max(535, 80 + 91 * (order.length - 1));
-  const laneY = (b) => [111, 48, 177][Math.max(0, branches.findIndex((it) => it.id === b)) % 3];
+  // One lane per branch, in branch order: main sits second from the top so the
+  // trunk reads between work above and ml/ventures below. Lanes ≥ 100 put the
+  // hash label under the node; the viewBox leaves room for the lowest label.
+  const lanes = [103, 48, 158, 213];
+  const height = 244;
+  const laneY = (b) => lanes[Math.max(0, branches.findIndex((it) => it.id === b)) % lanes.length];
   const points = new Map(order.map((it, i) => [it.id, {
     x: order.length === 1 ? 267 : 38 + ((graphWidth - 80) * i) / Math.max(1, order.length - 1), y: laneY(it.branch), item: it,
   }]));
@@ -79,11 +84,11 @@ export function repositoryGraph(items, branches) {
   const head = points.get(last?.id);
   const tail = first && head ? `<path class="map-tail" d="M0 ${first.y}H${first.x} M${head.x} ${head.y}H${graphWidth}"/>` : "";
   const width = graphWidth > 535 ? ` style="width:${graphWidth / 535 * 100}%"` : "";
-  return `<svg viewBox="0 0 ${graphWidth} 214"${width} role="group" aria-label="Project history, oldest on the left"><g aria-hidden="true">${tail}${paths.join("")}</g>${nodes.join("")}</svg>`;
+  return `<svg viewBox="0 0 ${graphWidth} ${height}"${width} role="group" aria-label="Project history, oldest on the left"><g aria-hidden="true">${tail}${paths.join("")}</g>${nodes.join("")}</svg>`;
 }
 
 const range = (n, f) => Array.from({length:n}, (_, i) => f(i)).join("");
-// Six small editions of a print series: each uses the subject of the project
+// Seven small editions of a print series: each uses the subject of the project
 // as its drawing, from parallel delivery routes to acoustic waveforms.
 const drawings = {
   relay: () => `<g class="print-ink" fill="none" stroke-width="2.7">${range(14,i=>{
@@ -98,6 +103,18 @@ const drawings = {
   wayfinder: () => `<g class="contours" fill="none" stroke-width="1.8">${range(18,j=>{const s=16+j*7;const pts=Array.from({length:120},(_,i)=>{const t=i/120*Math.PI*2;const r=s*(1+.13*Math.sin(t*3+.5)+.08*Math.cos(t*5));return `${(158+r*Math.cos(t)*1.48).toFixed(1)},${(81+r*Math.sin(t)*.91).toFixed(1)}`;}).join(" ");return `<polygon points="${pts}"/>`;})}</g><path class="trail" fill="none" stroke-width="3" stroke-dasharray="4 3" d="M50 142q32-79 73-49t47-17q7-24 42-6t55-38"/><g class="trail-end"><circle cx="50" cy="142" r="5"/><circle cx="267" cy="32" r="5"/></g>`,
   tracekit: () => `<g class="trace-guides">${range(11,i=>`<path d="M${30+i*26} 37v112"/>`)}</g><g class="trace-bars">${[[32,49,241],[49,68,126],[76,86,74],[125,103,72],[162,121,94],[225,137,33]].map(([x,y,w],i)=>`<rect class="trace-${i%3}" x="${x}" y="${y}" width="${w}" height="7" rx="1"/>`).join("")}</g>`,
   scratchpad: () => `<g class="notebook" stroke-width="2.1" stroke-linejoin="round" transform="rotate(-10 160 88)"><path class="note-edge" d="M88 30h140v123H88z"/><path class="note-face" d="M83 24h140v123H83z"/><path class="note-spine" d="M102 24v123"/>${range(6,i=>`<path class="note-ruling" d="M111 ${49+i*13}h96"/>`)}<path class="note-type" d="m139 66-12 9 12 9m37-18 12 9-12 9m-9-25-12 34"/><path class="bookmark" d="M191 24v30l6-5 6 5V24z"/></g>`,
+  // Three input streams (image, audio, tabular) converge on one gate, then a single output.
+  pipeline: () => {
+    const lanes = [42, 88, 134];
+    const streams = lanes.map(y => range(5, i => {
+      const o = (i - 2) * 3.4, m = 88 + o * 0.7;
+      return `<path d="M-12 ${y + o}H${74 + i * 3}C${116 + i * 2} ${y + o} ${118} ${m} ${150} ${m}"/>`;
+    })).join("");
+    const out = range(5, i => `<path d="M196 ${88 + (i - 2) * 3.4 * 0.7}H${226 + i * 9}"/>`);
+    return `<g class="print-ink" fill="none" stroke-width="1.6">${streams}${out}<path d="M196 88H296" stroke-width="2.8"/></g>
+  <g class="print-fill">${lanes.map(y => `<rect x="54" y="${y - 9}" width="18" height="18" rx="2"/>`).join("")}
+  <rect x="150" y="65" width="46" height="46" rx="3"/><path d="M296 79l15 9-15 9z"/></g>`;
+  },
 };
 let edition = 0;
 export function cover(item) {
