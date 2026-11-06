@@ -12,7 +12,17 @@ npm run dev
 
 Then open `http://127.0.0.1:4173/`. The dev server watches `dist/` and reloads open tabs on save, and nothing needs installing first. Use `PORT=4174 npm run dev` for another port. Sanity only accepts requests from the allowed origins, which include `127.0.0.1:4173` and `localhost:4173`, so other ports can't load content until you add them under the project's CORS settings.
 
-`dist/` is the whole static site, so deploy that folder as is.
+`dist/` is the whole static site, with no build step except the journal bundle.
+
+## Deploy
+
+The site runs on Cloudflare as a Worker that serves `dist/` as static files (`wrangler.jsonc`), at [hycient.dev](https://hycient.dev/) and `www.hycient.dev`. The domain is registered at Hostinger and uses Cloudflare's nameservers; deploying attaches both hostnames and Cloudflare manages their DNS records and certificates.
+
+```bash
+npm run deploy
+```
+
+The first run needs `npx wrangler@4 login`. Each deploy uploads `dist/` as it is on disk, so rebuild the journal first if `src/` changed. Sanity must list every origin the site is served from under CORS (`npx sanity cors add https://… --no-credentials` in the Studio repo).
 
 ## Where things live
 
