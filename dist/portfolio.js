@@ -31,9 +31,11 @@ export const branches = [
 // Every tool listed here appears in the tech stack. Tools a project uses link to
 // its filtered log; uncategorized tools from a project's stack go under “Other”.
 export const stackGroups = [
-  { label: "Languages", tools: ["TypeScript", "JavaScript", "Python", "C#", "Dart"] },
-  { label: "Interfaces", tools: ["React", "Next.js", "React Native", "Flutter", "Vite", "Tailwind CSS", "three.js"] },
-  { label: "Back end & data", tools: ["Node.js", "NestJS", ".NET", "Prisma", "PostgreSQL", "MongoDB", "Laravel", "Zod"] },
-  { label: "ML & AI", tools: ["LangGraph", "Claude API", "ChatGPT API", "Embeddings", "scikit-learn", "TensorFlow", "Keras", "NumPy", "joblib", "TensorBoard", "Weights & Biases"] },
-  { label: "Cloud", tools: ["AWS", "Azure", "Railway", "Cloudflare"] },
+  { label: "Languages", tools: ["TypeScript", "JavaScript", "Python", "C#", "Dart", "PHP", "SQL"] },
+  { label: "Front end & mobile", tools: ["React", "Next.js", "React Native", "Flutter", "Vite", "Tailwind CSS", "three.js"] },
+  { label: "Back end & APIs", tools: ["Node.js", "NestJS", "Express", ".NET", "Laravel", "GraphQL", "REST APIs", "Zod"] },
+  { label: "Data", tools: ["PostgreSQL", "MongoDB", "MySQL", "Prisma", "Data pipelines"] },
+  { label: "ML & AI", tools: ["LLM agents", "LangGraph", "Claude API", "ChatGPT API", "Embeddings", "Recommendation systems", "Computer vision", "scikit-learn", "TensorFlow", "Keras", "NumPy", "joblib", "TensorBoard", "Weights & Biases"] },
+  { label: "Cloud & delivery", tools: ["AWS", "Azure", "Vercel", "Railway", "Cloudflare", "CI/CD", "TDD"] },
+  { label: "Leadership", tools: ["System architecture", "Technical leadership", "Mentoring", "Stakeholder management"] },
 ];

@@ -85,5 +85,5 @@ export function updateProjectProfile(migrations) {
 
 export function projectProfileUnavailable() {
   document.getElementById("contact-links").innerHTML = contactRow(null, "Projects unavailable");
-  document.getElementById("tools").innerHTML = '<div class="tool-group"><dt>Projects</dt><dd>Tech stack unavailable.</dd></div>';
+  document.getElementById("tools").innerHTML = techStack([]);   // the skills still show; none can filter
 }
