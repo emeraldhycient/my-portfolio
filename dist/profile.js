@@ -50,7 +50,8 @@ function contactRow(resume, resumeStatus = "Loading projects") {
     { label: "LinkedIn", icon: "linkedin", url: profile.social?.linkedin, external: true },
     { label: "Email", icon: "mail", url: "#contact" },
     { label: "Résumé", icon: "download", url: cv?.url || resume, download: cv?.download || profile.handle + "-resume.txt" },
-  ];
+    profile.altResume?.url && { label: profile.altResume.label, icon: "download", url: profile.altResume.url, download: profile.altResume.file },
+  ].filter(Boolean);
   return contacts.map(contact => {
     const leadingIcon = `<span class="contact-icon">${icon(contact.icon)}</span>`;
     if (!contact.url) {
