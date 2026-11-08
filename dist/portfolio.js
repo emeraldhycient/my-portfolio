@@ -16,7 +16,7 @@ export const profile = {
   // A second CV, shown as its own cell after Résumé.
   altResume: { label: "AI/ML CV", url: "/Hycient-Igweze-CV-AI-ML.pdf", file: "Hycient-Igweze-CV-AI-ML.pdf" },
   about: [
-    "I'm a full-stack engineer with 7+ years across fintech, payments, health and government. At Whiteshield I work on AI-powered platforms for governments, including UAE Skills and the EduHub admissions portal, where I also wrote the skills and course recommendation model. Before that I built payment infrastructure for PayS at Sahara Group and led mobile for a multi-currency crypto exchange.",
+    "I'm a full-stack engineer with ~a decade of experience across fintech, payments, health and government. At Whiteshield I work on AI-powered platforms for governments, including UAE Skills and the EduHub admissions portal, where I also wrote the skills and course recommendation model. Before that I built payment infrastructure for PayS at Sahara Group and led mobile for a multi-currency crypto exchange.",
     "Most of my work sits where models meet real consequences: money, health data, public services. I care about evaluation that doesn't flatter the model, boundaries that limit what a bad output can do, and shipping the boring parts properly. Outside the day job I run PlumAutomate, my software and automation studio, and co-founded Moving Man Logistics in Kigali and EcoRed in Nigeria.",
   ],
   focus: ["AI product engineering", "ML & data pipelines", "Fintech & payments"],
